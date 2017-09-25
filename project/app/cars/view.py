@@ -122,3 +122,12 @@ def rent_revoke(parameters):
     else: 
         response['message'] = 'The car was already available!'
     return response
+
+def sale_profit(parameters):
+    response = {"message": [], "status": "failed"}
+    sp = Car()
+    try:
+        sp.cal_sale_prof()
+        return 'x'
+    except:
+        return response

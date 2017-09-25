@@ -95,3 +95,15 @@ class Car():
             return result
         except:
             return False
+
+    def cal_sale_prof(self):
+        conn = init()
+        db = conn.innovaccer
+        coll = db.cars
+        try:
+            result = coll.car_info.aggregate([{'$group' : {'_id' : None, 'sale' : {'$sum' : '$selling_price'}}}])
+            print [result for result in result]
+            return True
+        except:
+            return False
+        

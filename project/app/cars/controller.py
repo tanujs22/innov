@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from werkzeug.datastructures import CombinedMultiDict, MultiDict
 from tools.CORS import crossdomain
 from tools.Toolkit import respond
-from view import list_cars, add_car, car_info, sell_car, rent_car, rent_revoke
+from view import list_cars, add_car, car_info, sell_car, rent_car, rent_revoke, sale_profit
 
 cars_api = Blueprint('cars', __name__, url_prefix='/cars')
 
@@ -46,4 +46,11 @@ def rent():
 def revoke():
 	parameters = request.get_json()
 	response = rent_revoke(parameters)
+	return respond(response)
+
+@cars_api.route('/accounts/sale', methods=['GET'])
+@crossdomain(origin='*')
+def ac_sale():
+	parameters = CombinedMultiDict([request.args, request.form])
+	response = sale_profit(parameters)
 	return respond(response)
