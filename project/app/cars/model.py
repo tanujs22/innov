@@ -85,3 +85,13 @@ class Car():
             return True
         except:
             return False
+
+    def fetch_rent(self, car_id):
+        conn = init()
+        db = conn.innovaccer
+        coll = db.cars
+        try:
+            result = coll.car_rent.find_one({"_id" : ObjectId(car_id)})
+            return result
+        except:
+            return False

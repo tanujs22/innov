@@ -7,14 +7,12 @@ def list_cars(parameters):
     if list_type:
         try:
             result = lc.fetch_all(list_type)
-            print result
             response['data'] = result
             response['status'] = 'success'
         except:
             response
     try:
         result = lc.fetch_all(list_type)
-        print result
         response['data'] = result
         response['status'] = 'success'
     except:
@@ -27,6 +25,9 @@ def car_info(parameters):
     lc = Car()
     try:
         result = lc.fetch_one(car_id)
+        if result['car_for'] == 'rent':
+            res = lc.fetch_rent(car_id)
+            response['rent_info'] = res['rent_data']
         response['data'] = result
         response['status'] = 'success'
     except:
