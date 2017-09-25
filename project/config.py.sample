@@ -1,0 +1,58 @@
+import os
+
+# Define if the application is running in debug mode
+# Expected value = Boolean
+DEBUG = True
+
+# Manual configuration for testing environment
+# Expected value = Boolean
+TEST_ENV = False
+
+# Define port to run the application on
+# Expected value = Integer
+PORT = 8001
+
+#======================================================================
+BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+#======================================================================
+
+# Defining application credentials
+POSTGRES_CREDS = {
+        'USER': 'username',
+        'PASSWORD': 'password',
+        'HOST': 'host.rds.amazonaws.com',
+        'DATABASE': 'dbname',
+        'ENCODING': 'UTF8'
+        }
+
+# Specify default encoding for the application
+DEFAULT_ENCODING = 'utf-8'
+
+# Application threads. A common general assumption is
+# using 2 per available processor cores - to handle
+# incoming requests using one and performing background
+# operations using the other.
+THREADS_PER_PAGE = 2
+
+# Enable protection agains *Cross-site Request Forgery (CSRF)*
+CSRF_ENABLED = True
+
+# Use a secure, unique and absolutely secret key for
+# signing the data.
+CSRF_SESSION_KEY = "somerandomwkqohe893qydhon3i"
+
+# Secret key for signing cookies
+SECRET_KEY = "somesecretjfeof28qwedn328fh032"
+
+# server settings
+API_PROTOCOL = 'http'
+API_SERVER_NAME = 'api.klga.to'
+
+# AWS settings
+S3_ENDPOINT = "region.amazonaws.com"
+S3_ACCESS_KEY = "S3ACCESSKEY"
+S3_SECRET_KEY = "S3ACCESSSECRET"
+CLOUDFRONT_ENDPOINT = "http://sample.cloudfront.net/"
+
+# MISC settings
+TEMP_STORIES = "/path/to/temp/"
