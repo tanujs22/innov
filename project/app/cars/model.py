@@ -52,3 +52,36 @@ class Car():
             return response
         except:
             return False
+
+    def sl_car(self, car_id, selling_price):
+        conn = init()
+        db = conn.innovaccer
+        coll = db.cars
+        try:
+            response = coll.car_info.update({"_id" : ObjectId(car_id)},{"$set" : {"selling_price": selling_price, "status" : "sold"}})
+            print response
+            return True
+        except:
+            return False
+
+    def rt_car(self, car_id, rent, origin, destination):
+        conn = init()
+        db = conn.innovaccer
+        coll = db.cars
+        data = {"_id" : car_id, "rent_data" : [{"fare" : rent, "date_of_rent_human" : self.dt_strg, 'date_of_rent_unix' : self.dt_unix}]}
+        try:
+            response = coll.car_rent.update({"_id" : ObjectId(car_id)},{'$push' : { "rent_data" : {"fare" : rent, "date_of_rent_human" : self.dt_strg, 'date_of_rent_unix' : self.dt_unix, "origin" : origin, "destination" : destination}}},upsert=True)
+            coll.car_info.update({"_id" : ObjectId(car_id)},{"$set" : {"status" : "rented"}})
+            return True
+        except:
+            return False
+
+    def revoke(self, car_id):
+        conn = init()
+        db = conn.innovaccer
+        coll = db.cars
+        try:
+            coll.car_info.update({"_id" : ObjectId(car_id)},{"$set" : {"status" : ""}})
+            return True
+        except:
+            return False

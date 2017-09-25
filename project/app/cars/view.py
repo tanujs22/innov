@@ -66,12 +66,58 @@ def add_car(parameters):
     except:
         return response
     
+def sell_car(parameters):
+    response = {"message": [], "status": "failed"}
+    dt = car_info(parameters)
+    try:
+        car_id = dt['data']['_id']
+    except:
+        response['message'] = 'Wrong car id'
+    selling_price = parameters['amount']
+    sl = Car()
+    if dt['data']['status'] == '':
+        sl.sl_car(car_id, selling_price)
+        response['message'] = 'Car Sold'
+        response['status'] = 'success'
+        return response
+    else:
+        response['message'] = 'This car has been either sold or has been rented.'
+        return response
 
-# def car_info(parameters):
-#     response = {"message": [], "status": "failed"}
-    
-#     return response
+def rent_car(parameters):
+    response = {"message": [], "status": "failed"}
+    dt = car_info(parameters)
+    try:
+        car_id = dt['data']['_id']
+        origin = parameters['origin']
+        destination = parameters['destination']
+    except:
+        response['message'] = 'Wrong car id'
+        return response
+    rent = parameters['amount']
+    sr = Car()
+    if (dt['data']['status'] == ''):
+        sr.rt_car(car_id, rent, origin, destination)
+        response['message'] = 'The car has been booked.'
+        response['status'] = 'success'
+    else: 
+        response['message'] = 'This car has been either sold or has been rented.'
+    return response
 
-
-
-
+def rent_revoke(parameters):
+    response = {"message": [], "status": "failed"}
+    dt = car_info(parameters)
+    try:
+        car_id = dt['data']['_id']
+    except:
+        response
+    sr = Car()
+    if (dt['data']['status'] == 'rented'):
+        result = sr.revoke(car_id)
+        if result:
+            response['message'] = 'The car is available now!'
+            response['status'] = 'success'
+            return response
+    else: 
+        response['message'] = 'The car was already available!'
+    return response
